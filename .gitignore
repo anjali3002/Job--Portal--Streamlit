@@ -1,0 +1,10 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore CSV data files (user/job data)
+Datas/*.csv
+
+# Ignore virtual environment (if created later)
+venv/
+.env
