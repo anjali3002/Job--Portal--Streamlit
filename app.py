@@ -33,19 +33,26 @@ def signup_ui():
     st.title("📝 Sign Up")
 
     username = st.text_input("Username")
+    email = st.text_input("Email Address")
+    phone = st.text_input("Phone Number")
     password = st.text_input("Password", type="password")
+    confirm_password = st.text_input("Confirm Password", type="password")
     role = st.selectbox("Role", ["job_seeker", "employer"])
 
     if st.button("Create Account"):
-        if not username or not password:
+        if not all([username, email, phone, password, confirm_password]):
             st.warning("Please fill all fields")
+            return
+
+        if password != confirm_password:
+            st.error("Passwords do not match")
             return
 
         if user_exists(username):
             st.error("Username already exists")
             return
 
-        add_user(username, password, role)
+        add_user(username, password, role, email, phone)
         st.success("Account created successfully! Please login.")
         st.rerun()
 
@@ -74,6 +81,7 @@ def main():
             signup_ui()
     else:
         st.sidebar.write(f"👤 {st.session_state['username']}")
+
         if st.sidebar.button("Logout"):
             logout()
 
